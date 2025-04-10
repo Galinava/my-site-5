@@ -19,17 +19,22 @@
 --cloud-bg: #f4f4fd;
 --green-bg:#31D0AA;
 --light-slate-bg: #8e8f99;
+  --dairy-bg: #fcfcfc;
+  --cornflower-bg: #e7e9fc;
 
 /* BR colors */
 --cornflower-br: #e7e9fc;
 --light-slate-br: #8e8f99;
 --cloud-br: #f4f4fd;
 --ocean-br: #404bbf;
+--navy-blue-modal:rgba(46, 47, 66, 0.4);
 
 /* Others */
 --items: 3;
 --indent: 24px;
 --radius: 4px;
+
+--trns-fast: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* reset styles */
@@ -112,6 +117,9 @@ img {
   font-size: 16px;
   line-height: calc(24 / 16);
   letter-spacing: 0.04em;
+}
+
+.button {
   cursor: pointer;
 }
 
@@ -153,6 +161,8 @@ img {
 
 .header-logo {
   margin-right: 76px;
+  padding-top: 24px;
+  padding-bottom: 24px;
 }
 
 .header-logo-accent {
@@ -170,10 +180,18 @@ img {
 }
 
 .header-link {
+  font-weight: 500;
+}
+
+/* Normal conditions */
+.header-link,
+.header-contact {
+  position: relative;
   display: block;
   padding-top: 24px;
   padding-bottom: 24px;
-  font-weight: 500;
+
+  transition: color var(--trns-fast);
 }
 
 .current {
@@ -187,17 +205,26 @@ img {
 }
 
 .header-contact {
-  display: block;
-  padding-top: 24px;
-  padding-bottom: 24px;
   color: var(--slate-tx);
 }
 
+/* Active conditions */
 .header-link:hover,
 .header-link:focus,
 .header-contact:hover,
 .header-contact:focus {
   color: var(--ocean-tx);
+}
+
+.header-link.current::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  height: 4px;
+  border-radius: var(--radius);
+  background-color: var(--ocean-br);
 }
 
 /* Hero styles */
@@ -225,6 +252,7 @@ img {
   color: var(--white-tx);
 }
 
+/* Normal conditions */
 .hero-button {
   display: block;
   margin-left: auto;
@@ -236,8 +264,11 @@ img {
   background-color: var(--iris-bg);
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
   border: none;
+
+  transition: background-color var(--trns-fast);
 }
 
+/* Active conditions */
 .hero-button:hover,
 .hero-button:focus {
   background-color: var(--ocean-bg);
@@ -323,6 +354,7 @@ img {
   gap: var(--indent);
 }
 
+/* Normal conditions */
 .socials-link {
   display: flex;
   align-items: center;
@@ -331,12 +363,15 @@ img {
   height: 40px;
   background-color: var(--iris-bg);
   border-radius: 50%;
+
+  transition: background-color var(--trns-fast);
 }
 
 .socials-icon {
   fill: var(--cloud-bg);
 }
 
+/* Active conditions */
 .socials-link:hover, 
 .socials-link:focus {
   background-color: var(--ocean-bg);
@@ -348,6 +383,7 @@ img {
   gap: var(--indent);
 }
 
+/* Normal conditions */
 .customers-link {
   display: flex;
   align-items: center;
@@ -356,20 +392,21 @@ img {
   height: 88px;
   border: 1px solid var(--light-slate-br);
   border-radius: var(--radius);
+  color: var(--light-slate-bg);
+
+  transition: border-color var(--trns-fast), color var(--trns-fast);
 }
 
+/* Active conditions */
 .customers-link:hover, 
 .customers-link:focus { 
+  color: var(--ocean-tx);
   border-color: var(--ocean-br);
 }
 
-.customers-link:hover .customers-icon,
-.customers-link:hover .customers-icon {
-  fill: var(--ocean-bg);
-}
-
+/* Normal conditions */
 .customers-icon {
-  fill: var(--light-slate-bg);
+  fill: currentColor;
 }
 
 /* Filters styles */
@@ -384,14 +421,18 @@ img {
   gap: var(--indent);
 }
 
+/* Normal conditions */
 .filters-button {
   text-align: center;
   color: var(--iris-tx);
   padding: 11px 23px;
   border: 1px solid var(--cornflower-br);
   background-color: var(--cloud-bg);
+
+  transition: color var(--trns-fast), background-color var(--trns-fast), box-shadow var(--trns-fast);
 }
 
+/* Active conditions */
 .filters-button:hover,
 .filters-button:focus {
   color: var(--white-tx);
@@ -408,22 +449,54 @@ img {
   row-gap: 48px; 
 }
 
-.card-item {
+/* Normal conditions */
+.card-link {
+  display: block;
   border-top: 0;
   background-color: var(--white-bg);
+  transition: border var(--trns-fast), box-shadow var(--trns-fast);
 }
 
-.card-wraper {
+.card-wrapper {
   padding-left: 16px;
   padding-top: 32px;
   padding-bottom: 32px;
   border: 1px solid var(--cornflower-br);
 }
 
-.card-item:hover,
-.card-item:focus {
+/* Active conditions */
+.card-link:hover,
+.card-link:focus {
   border: var(--cloud-br);
   box-shadow: 0 2px 1px 0 rgba(46, 47, 66, 0.08), 0 1px 1px 0 rgba(46, 47, 66, 0.16), 0 1px 6px 0 rgba(46, 47, 66, 0.08);
+}
+
+.card-overlay-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  transform: translate(0, 100%);
+  transition: transform var(--trns-fast);
+
+  padding-top: 40px;
+  padding-left: 32px;
+  padding-right: 32px;
+  color: var(--cloud-tx);
+  background-color: var(--iris-bg);
+}
+
+.card-link:hover .overlay,
+.card-link:focus .overlay {
+  transform: translate(0, 0);
+
 }
 
 .card-text {
@@ -470,7 +543,78 @@ img {
   gap: 16px;
 }
 
+/* Active conditions */
 .socials-footer-link:hover,
 .socials-footer-link:focus {
   background-color: var(--green-bg);
+}
+
+/* Modal window styles */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: var(--navy-blue-modal);
+  transition: opasity var(--trns-fast), visibility var(--trns-fast);
+}
+
+.backdrop.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 408px;
+  min-height: 584px;
+  background-color: var(--dairy-bg);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.14);
+  transition: transform var(--trns-fast), opacity var(--trns-fast);
+}
+
+.backdrop.is-hidden .modal {
+  transform: translate(-50% -70%);
+  opacity: 0;
+}
+
+.modal-btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 100%;
+  background-color: var(--cornflower-bg);
+  stroke-width: 1px;
+  stroke: rgba(0, 0, 0, 0.1);
+  background-color: var(--cornflower-bg);
+  transition: background-color var(--trns-fast);
+}
+
+.modal-icon {
+  fill: var(--navy-blue-tx);
+  transition: fill var(--trns-fast);
+}
+
+.modal-btn:hover,
+.modal-btn:focus {
+  background-color: var(--ocean-bg);
+}
+
+.modal-btn:hover .modal-icon,
+.modal-btn:focus .modal-icon {
+  fill: var(--white-tx);
 }
